@@ -1,34 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Magic Wand Reveal Card Layout</title>
+    <title>tongkatAjaib Layout</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link href="https://fonts.googleapis.com/css?family=Sofia" rel="stylesheet">
-<!--     <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" /> -->
-    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" /> -->
+    <style media="screen">
+      body {
+        font-family: 'Sofia';
+        color: white;
+        background: rgb(2, 6, 23);
+        height: 100vh;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      #wand {
+        width: 10vmin;
+        aspect-ratio: 1 / 10;
+        background: linear-gradient(
+          to right,
+          rgb(26 24 28) 10%,
+          rgb(42 40 44) 45% 55%,
+          rgb(26 24 28) 90%
+        );
+        position: absolute;
+        left: 5%;
+        top: 20%;
+        translate: -50%;
+        rotate: -3deg;
+        z-index: 100;
+        border-radius: 3vmin;
+        box-shadow: 0vmin 1vmin 4vmin rgb(0 0 0 / 80%);
+        overflow: hidden;
+      }
+
+      #wand > .cap {
+        height: 20%;
+        width: 100%;
+        background: linear-gradient(
+          to right,
+          rgb(212 221 236) 10%,
+          rgb(255 255 255) 45% 55%,
+          rgb(212 221 236) 90%
+        );
+      }
+
+      #tiles {
+        display: flex;
+      }
+
+      .tile {
+        display: grid;
+        place-items: center;
+        width: 38vmin;
+        aspect-ratio: 1;
+        background-color: rgb(31, 41, 55);
+        border-radius: 6vmin;
+        box-shadow: 0vmin 3vmin 6vmin rgb(0 0 0 / 25%),
+          inset 0vmin 0.5vmin 1vmin rgb(255 255 255 / 15%);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .tile:nth-child(1) {
+        rotate: 3deg;
+        z-index: 3;
+      }
+
+      .tile:nth-child(2) {
+        rotate: -2deg;
+        z-index: 2;
+      }
+
+      .tile:nth-child(3) {
+        rotate: 5deg;
+        z-index: 1;
+      }
+
+      .tile:is(:nth-child(2), :nth-child(3)) {
+        margin-left: -10vmin;
+      }
+
+      .tile > i {
+        font-size: 15vmin;
+        color: rgb(255 255 255 / 10%);
+      }
+
+      .tile > img {
+        height: 100%;
+        aspect-ratio: 1;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        object-fit: cover;
+        opacity: var(--opacity);
+        filter: blur(calc(var(--blur) * 10px));
+      }
+      .submit-btn {
+        background-color: rgba(0,0,0,0.4);
+        color: rgba(256,256,256,0.7);
+        border:0;
+        border-radius: 15px;
+        display: block;
+        margin: 15px auto;
+        padding: 15px 45px;
+        width: 30%;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+        opacity: 1;
+        visibility: visible;
+        -webkit-transition: all .3s ease;
+
+        &:hover {
+          transition: all .3s ease;
+          background-color: rgba(0,0,0,0.8);
+        }
+      }
+      div.background {
+        background: url('https://iskandarnote.com/wp-content/uploads/2021/04/Slide3-1-scaled.jpg') repeat;
+        border: 2px solid blue;
+      }
+      div.transbox {
+        margin: 30px;
+        background-color: #ffffff;
+        border: 1px solid black;
+        opacity: 0.6;
+        filter: alpha(opacity=60); /* For IE8 and earlier */
+      }
+
+      div.transbox p,h5{
+        margin: 5%;
+        font-weight: bold;
+        color: #000000;
+      }
+    </style>
   </head>
   <body>
-    <p style="color:white;">Selamat Menunaikan Ibadah Sahur</p>
-    <div id="wand">
-      <div class="cap"></div>
-    </div>
-    <div id="tiles">
-      <div class="tile">
-        <i class="fa-solid fa-image"></i>
-        <img src="https://assets.codepen.io/1468070/mousepad-tile-1.png?format=auto&quality=80" />
+    <div class="background">
+      <div class="transbox">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <h5>Selamat Menunaikan Ibadah Sahur</h5>
+        <!-- The start button --->
+        <button id="startbtn" class="submit-btn">Start</button>
+
+        <!-- The actual content, hidden by default -->
+        <div id="content" style="display: none;">
+          <p>joel sunny-luminary ...</p>
+        </div>
+
+        <!-- This is displayed when the user has pressed the start button, but the music is still loading -->
+        <div id="loader" style="display: none;">
+          <p>Loading ...</p>
+        </div>
+
+        <!-- The music. It is started by the Javascript -->
+        <!-- <audio id="music" src="{{url_for('static',filename='freecompress-joel sunny - luminary (official music video) (128 kbps).mp3')}}" style="display: none;" type="audio/mpeg" loop></audio> -->
+        <audio id="music" src="../static/freecompress-joel sunny - luminary (official music video) (128 kbps).mp3" style="display: none;" type="audio/mpeg" loop></audio>
+
       </div>
-      <div class="tile">
-        <i class="fa-solid fa-image"></i>
-        <img src="https://assets.codepen.io/1468070/mousepad-tile-4.png?format=auto&quality=80" />
+      <div id="wand">
+        <div class="cap"></div>
       </div>
-      <div class="tile">
-        <i class="fa-solid fa-image"></i>
-        <img src="https://assets.codepen.io/1468070/mousepad-tile-3.png?format=auto&quality=80" />
+      <div id="tiles">
+        <div class="tile">
+          <i class="fa-solid fa-image"></i>
+          <img src="https://assets.codepen.io/1468070/mousepad-tile-1.png?format=auto&quality=80" />
+        </div>
+        <div class="tile">
+          <i class="fa-solid fa-image"></i>
+          <img src="https://images.unsplash.com/photo-1633258993966-17878d2b10a3?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+        </div>
+        <div class="tile">
+          <i class="fa-solid fa-image"></i>
+          <img src="https://pbs.twimg.com/media/D8df7bIUIAAtMRG.jpg" />
+        </div>
       </div>
     </div>
     <script src="https://kit.fontawesome.com/1ee8f271b9.js"></script>
-<!--     <script src="{{url_for('static',filename='script.js')}}"></script> -->
-    <script type="text/javascript" src="script.js"> </script>
+    <!-- <script src="{{url_for('static',filename='script.js')}}"></script> -->
+    <script type="text/javascript">
+      const wand = document.getElementById("wand"),
+            tiles = document.querySelectorAll(".tile");
+
+
+      const xy = (x, y) => ({ x, y }),
+            px = value => `${value}px`,
+            deg = value => `${value}deg`,
+            clamp = (value, min, max) => Math.max(Math.min(value, max), min);
+
+      const updateMouse = (mouseX, mouseY) => {
+        const { innerWidth: windowWidth, innerHeight: windowHeight } = window;
+
+        const mouse = {
+          position: xy(mouseX, mouseY),
+          decimal: xy(mouseX / windowWidth, mouseY / windowHeight),
+          multiplier: xy(1.3, 0.4),
+          offset: xy(windowWidth * -0.15, windowHeight * 0.1),
+          modifiedPosition: xy(0, 0)
+        }
+
+        mouse.modifiedPosition.x = mouse.position.x * mouse.multiplier.x + mouse.offset.x;
+        mouse.modifiedPosition.y = mouse.position.y * mouse.multiplier.y + mouse.offset.y;
+
+        return mouse;
+      }
+
+      const revealImages = mouseX => {
+        for(const tile of tiles) {
+          const dimensions = tile.getBoundingClientRect(),
+                relativeMouseX = mouseX - dimensions.left,
+                mouseXAsDecimal = clamp(relativeMouseX / dimensions.width, 0, 1);
+
+          const opacity = mouseXAsDecimal,
+                blur = 1 - mouseXAsDecimal;
+
+          tile.style.setProperty("--opacity", opacity);
+          tile.style.setProperty("--blur", blur);
+        }
+      }
+
+      const getWandStyles = mouse => ({
+        left: px(mouse.modifiedPosition.x),
+        top: px(mouse.modifiedPosition.y),
+        rotate: deg(mouse.decimal.x * 20 - 10)
+      });
+
+      window.onmousemove = e => {
+        const mouse = updateMouse(e.clientX, e.clientY),
+              wandStyles = getWandStyles(mouse);
+
+        wand.animate(wandStyles, { duration: 400, fill: "forwards" });
+
+        revealImages(mouse.modifiedPosition.x);
+      }
+      const startbtn = document.getElementById("startbtn");
+      const content = document.getElementById("content");
+      const loader = document.getElementById("loader");
+      const music = document.getElementById("music");
+
+      //Add an event listner to the start button
+      startbtn.addEventListener("click", () => {
+        //Show the loader and hide the button
+        loader.style.display = "";
+        startbtn.style.display = "none";
+        //Wait for the music to start
+        music.play().then(() => {
+          //Hide the loader and show the content
+          content.style.display = "";
+          loader.style.display = "none";
+        });
+      });
+    </script>
   </body>
 </html>
